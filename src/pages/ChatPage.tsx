@@ -1,0 +1,28 @@
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ChatInterface from "../components/ChatInterface";
+import { useLanguage } from "../components/LanguageSelector";
+
+const ChatPage = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-1 container py-8">
+        <h1 className="text-3xl font-bold mb-6">{t('aiAssistant')}</h1>
+        <p className="text-muted-foreground mb-6">
+          Ask questions about sustainability regulations, get eco-friendly tips, or request compliance recommendations for your business.
+        </p>
+        
+        <ChatInterface />
+      </main>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default ChatPage;
