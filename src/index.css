@@ -75,6 +75,15 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Improve dark mode text visibility globally */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-white;
+  }
+  
+  .dark p, .dark span, .dark label, .dark div {
+    @apply text-white/90;
+  }
 }
 
 .chat-bubble {
@@ -86,5 +95,6 @@
 }
 
 .chat-bubble-ai {
-  @apply bg-eco-sand text-foreground rounded-tl-none;
+  @apply bg-eco-sand text-foreground dark:text-foreground rounded-tl-none;
 }
+

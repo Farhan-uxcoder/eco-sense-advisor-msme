@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Send, Mic, MicOff, RotateCcw, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -164,7 +163,7 @@ const ChatInterface = () => {
                 } max-w-[80%]`}
               >
                 <div className="whitespace-pre-wrap">{message.text}</div>
-                <div className="text-xs opacity-70 mt-1">
+                <div className="text-xs opacity-70 mt-1 dark:text-white/70">
                   {message.timestamp.toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -209,7 +208,7 @@ const ChatInterface = () => {
                 }
               }}
               placeholder={t("typeMessage")}
-              className="w-full px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-eco-primary pr-28"
+              className="w-full px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-eco-primary pr-28 dark:bg-eco-primary/20 dark:border-eco-primary/40 dark:text-white dark:placeholder:text-white/60"
               disabled={isLoading}
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">

@@ -52,73 +52,73 @@ const Index = () => {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-16 bg-white">
+        <section id="features" className="py-16 bg-white dark:bg-background">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">How EcoSense Advisor Can Help Your Business</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">How EcoSense Advisor Can Help Your Business</h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand">
+              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand dark:border-eco-primary/40">
                 <div className="bg-eco-primary w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Compliance Checkups</h3>
-                <p className="text-muted-foreground">Stay on top of environmental regulations specific to your business type and location with personalized compliance checks.</p>
+                <h3 className="text-xl font-semibold mb-2 dark:text-white">Compliance Checkups</h3>
+                <p className="text-muted-foreground dark:text-white/80">Stay on top of environmental regulations specific to your business type and location with personalized compliance checks.</p>
               </div>
               
-              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand">
+              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand dark:border-eco-primary/40">
                 <div className="bg-eco-primary w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <MessageCircle className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">AI Assistant</h3>
-                <p className="text-muted-foreground">Get instant answers and guidance on sustainability practices from our intelligent AI assistant in English or Kannada.</p>
+                <h3 className="text-xl font-semibold mb-2 dark:text-white">AI Assistant</h3>
+                <p className="text-muted-foreground dark:text-white/80">Get instant answers and guidance on sustainability practices from our intelligent AI assistant in English or Kannada.</p>
               </div>
               
-              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand">
+              <div className="bg-eco-sand/20 p-6 rounded-lg border border-eco-sand dark:border-eco-primary/40">
                 <div className="bg-eco-primary w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <BarChart2 className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Progress Tracking</h3>
-                <p className="text-muted-foreground">Monitor your sustainability journey with intuitive analytics and track your business's eco-friendly improvements over time.</p>
+                <h3 className="text-xl font-semibold mb-2 dark:text-white">Progress Tracking</h3>
+                <p className="text-muted-foreground dark:text-white/80">Monitor your sustainability journey with intuitive analytics and track your business's eco-friendly improvements over time.</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Benefits Section */}
-        <section className="py-16 bg-eco-sand/20">
+        <section className="py-16 bg-eco-sand/20 dark:bg-eco-primary/10">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">Benefits for MSMEs</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">Benefits for MSMEs</h2>
             
             <div className="grid md:grid-cols-2 gap-8">
               <div className="flex gap-4">
                 <CheckCircle className="h-6 w-6 text-eco-primary shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Cost Savings</h3>
-                  <p className="text-muted-foreground">Implementing sustainable practices can significantly reduce operational costs through energy efficiency and waste reduction.</p>
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white">Cost Savings</h3>
+                  <p className="text-muted-foreground dark:text-white/80">Implementing sustainable practices can significantly reduce operational costs through energy efficiency and waste reduction.</p>
                 </div>
               </div>
               
               <div className="flex gap-4">
                 <CheckCircle className="h-6 w-6 text-eco-primary shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Regulatory Compliance</h3>
-                  <p className="text-muted-foreground">Avoid penalties and legal issues by staying compliant with the latest environmental regulations applicable to your industry.</p>
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white">Regulatory Compliance</h3>
+                  <p className="text-muted-foreground dark:text-white/80">Avoid penalties and legal issues by staying compliant with the latest environmental regulations applicable to your industry.</p>
                 </div>
               </div>
               
               <div className="flex gap-4">
                 <CheckCircle className="h-6 w-6 text-eco-primary shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Enhanced Reputation</h3>
-                  <p className="text-muted-foreground">Build customer trust and loyalty by demonstrating your commitment to environmental sustainability and responsible business practices.</p>
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white">Enhanced Reputation</h3>
+                  <p className="text-muted-foreground dark:text-white/80">Build customer trust and loyalty by demonstrating your commitment to environmental sustainability and responsible business practices.</p>
                 </div>
               </div>
               
               <div className="flex gap-4">
                 <CheckCircle className="h-6 w-6 text-eco-primary shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Access to Incentives</h3>
-                  <p className="text-muted-foreground">Learn about and access government incentives, subsidies, and programs available for eco-friendly businesses.</p>
+                  <h3 className="text-xl font-semibold mb-2 dark:text-white">Access to Incentives</h3>
+                  <p className="text-muted-foreground dark:text-white/80">Learn about and access government incentives, subsidies, and programs available for eco-friendly businesses.</p>
                 </div>
               </div>
             </div>
