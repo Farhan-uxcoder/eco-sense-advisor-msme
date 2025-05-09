@@ -6,7 +6,7 @@ const Footer = () => {
   const { t } = useLanguage();
   
   return (
-    <footer className="bg-eco-sand/20 border-t border-eco-sand">
+    <footer className="bg-eco-sand/20 border-t border-eco-sand dark:bg-eco-primary/20 dark:border-eco-primary/40">
       <div className="container py-6 md:py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
