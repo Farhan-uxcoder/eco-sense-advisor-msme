@@ -12,8 +12,8 @@ const ChatPage = () => {
       <Header />
       
       <main className="flex-1 container py-8">
-        <h1 className="text-3xl font-bold mb-6">{t('aiAssistant')}</h1>
-        <p className="text-muted-foreground mb-6">
+        <h1 className="text-3xl font-bold mb-6 dark:text-white">{t('aiAssistant')}</h1>
+        <p className="text-muted-foreground dark:text-white/80 mb-6">
           Ask questions about sustainability regulations, get eco-friendly tips, or request compliance recommendations for your business. You can toggle between light and dark mode using the switch in the header.
         </p>
         

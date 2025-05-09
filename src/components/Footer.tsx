@@ -13,10 +13,10 @@ const Footer = () => {
             <div className="bg-eco-primary rounded-full p-1.5">
               <Leaf size={18} className="text-white" />
             </div>
-            <span className="font-semibold text-lg">EcoSense Advisor</span>
+            <span className="font-semibold text-lg dark:text-white">EcoSense Advisor</span>
           </div>
           
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-muted-foreground dark:text-white/70">
             © {new Date().getFullYear()} EcoSense Advisor. All rights reserved.
           </div>
         </div>

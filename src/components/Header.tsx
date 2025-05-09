@@ -17,21 +17,21 @@ const Header = () => {
             <div className="bg-eco-primary rounded-full p-1.5">
               <div className="text-white text-lg font-bold">ES</div>
             </div>
-            <span className="font-semibold text-lg hidden md:block">EcoSense Advisor</span>
+            <span className="font-semibold text-lg hidden md:block dark:text-white">EcoSense Advisor</span>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/dashboard" className="text-foreground hover:text-eco-primary flex items-center gap-1.5">
+          <Link to="/dashboard" className="text-foreground dark:text-white hover:text-eco-primary dark:hover:text-eco-secondary flex items-center gap-1.5">
             <BarChart2 size={18} />
             <span>Dashboard</span>
           </Link>
-          <Link to="/chat" className="text-foreground hover:text-eco-primary flex items-center gap-1.5">
+          <Link to="/chat" className="text-foreground dark:text-white hover:text-eco-primary dark:hover:text-eco-secondary flex items-center gap-1.5">
             <MessageCircle size={18} />
             <span>AI Assistant</span>
           </Link>
-          <Link to="/profile" className="text-foreground hover:text-eco-primary flex items-center gap-1.5">
+          <Link to="/profile" className="text-foreground dark:text-white hover:text-eco-primary dark:hover:text-eco-secondary flex items-center gap-1.5">
             <User size={18} />
             <span>Business Profile</span>
           </Link>
@@ -62,7 +62,7 @@ const Header = () => {
           <nav className="container flex flex-col gap-4 py-6">
             <Link 
               to="/dashboard" 
-              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md"
+              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md dark:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
               <BarChart2 size={20} />
@@ -70,7 +70,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/chat" 
-              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md"
+              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md dark:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
               <MessageCircle size={20} />
@@ -78,7 +78,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/profile" 
-              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md"
+              className="flex items-center gap-2 p-3 hover:bg-muted rounded-md dark:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
               <User size={20} />
