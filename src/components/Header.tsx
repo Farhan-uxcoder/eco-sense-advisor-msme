@@ -1,15 +1,16 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Globe, User, BarChart2, MessageCircle } from "lucide-react";
+import { Menu, X, BarChart2, MessageCircle, User } from "lucide-react";
 import { Button } from "./ui/button";
 import LanguageSelector from "./LanguageSelector";
+import DarkModeToggle from "./DarkModeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b border-eco-sand">
+    <header className="sticky top-0 z-50 w-full bg-white dark:bg-eco-primary/10 border-b border-eco-sand dark:border-eco-primary/40">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
@@ -34,11 +35,15 @@ const Header = () => {
             <User size={18} />
             <span>Business Profile</span>
           </Link>
-          <LanguageSelector />
+          <div className="flex items-center gap-4">
+            <DarkModeToggle />
+            <LanguageSelector />
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center gap-2">
+          <DarkModeToggle />
           <LanguageSelector compact />
           <Button
             variant="ghost"
@@ -53,7 +58,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="fixed inset-0 top-16 bg-white z-40 md:hidden">
+        <div className="fixed inset-0 top-16 bg-white dark:bg-eco-primary/10 z-40 md:hidden">
           <nav className="container flex flex-col gap-4 py-6">
             <Link 
               to="/dashboard" 
