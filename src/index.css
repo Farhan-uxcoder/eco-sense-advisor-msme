@@ -95,6 +95,6 @@
 }
 
 .chat-bubble-ai {
-  @apply bg-eco-sand text-foreground dark:text-foreground rounded-tl-none;
+  @apply bg-[#B7E4C7] text-foreground dark:text-foreground rounded-tl-none;
 }
 

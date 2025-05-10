@@ -28,7 +28,7 @@ const Index = () => {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Button asChild size="lg" className="bg-white text-eco-primary hover:bg-eco-sand">
-                    <Link to="/chat">
+                    <Link to="/profile">
                       {t('getStarted')}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -131,9 +131,9 @@ const Index = () => {
             <h2 className="text-3xl font-bold mb-4">Ready to make your business more sustainable?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">Join hundreds of MSMEs that are using EcoSense Advisor to become more environmentally responsible and economically efficient.</p>
             <Button asChild size="lg" className="bg-white text-eco-primary hover:bg-eco-sand">
-              <Link to="/chat">
-                Get Started with AI Assistant
-                <MessageCircle className="ml-2 h-5 w-5" />
+              <Link to="/profile">
+                Get Started with Business Profile
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
