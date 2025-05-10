@@ -33,14 +33,14 @@ const SmokeAnimation: React.FC = () => {
       constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
-        this.radius = Math.random() * 10 + 5;
-        this.color = `rgba(200, 200, 200, ${Math.random() * 0.3 + 0.1})`;
+        this.radius = Math.random() * 15 + 10; // Increased size
+        this.color = `rgba(180, 180, 180, ${Math.random() * 0.5 + 0.3})`; // Increased opacity
         this.velocity = {
-          x: Math.random() * 0.5 - 0.25,
-          y: Math.random() * -1.5 - 0.5
+          x: Math.random() * 0.8 - 0.4, // More horizontal movement
+          y: Math.random() * -2.5 - 1.0 // Faster upward movement
         };
-        this.alpha = Math.random() * 0.5 + 0.2;
-        this.alphaDecrease = Math.random() * 0.02 + 0.005;
+        this.alpha = Math.random() * 0.7 + 0.3; // Higher initial opacity
+        this.alphaDecrease = Math.random() * 0.01 + 0.003; // Slower fade
       }
 
       draw(ctx: CanvasRenderingContext2D) {
@@ -56,18 +56,19 @@ const SmokeAnimation: React.FC = () => {
       update() {
         this.x += this.velocity.x;
         this.y += this.velocity.y;
-        this.radius += 0.2;
+        this.radius += 0.3; // Faster expansion
         this.alpha -= this.alphaDecrease;
       }
     }
 
     // Factory chimney positions (adjust based on your layout)
     const chimneys = [
-      { x: canvas.width * 0.7, y: canvas.height * 0.65 },  // Right side
+      { x: canvas.width * 0.7, y: canvas.height * 0.7 }, // Right side
+      { x: canvas.width * 0.75, y: canvas.height * 0.68 }, // Another chimney nearby
     ];
 
     const particles: SmokeParticle[] = [];
-    const MAX_PARTICLES = 100;
+    const MAX_PARTICLES = 200; // More particles
 
     // Animation loop
     const animate = () => {
@@ -75,8 +76,8 @@ const SmokeAnimation: React.FC = () => {
       
       // Add new particles at chimney positions
       chimneys.forEach(chimney => {
-        if (particles.length < MAX_PARTICLES && Math.random() < 0.2) {
-          const offsetX = Math.random() * 10 - 5;
+        if (particles.length < MAX_PARTICLES && Math.random() < 0.3) { // Higher spawn rate
+          const offsetX = Math.random() * 15 - 7.5;
           particles.push(new SmokeParticle(chimney.x + offsetX, chimney.y));
         }
       });
@@ -105,7 +106,7 @@ const SmokeAnimation: React.FC = () => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
     />
   );
 };
