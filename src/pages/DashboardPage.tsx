@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useLanguage } from "../components/LanguageSelector";
 import PieChart from "../components/PieChart";
+import ComplianceLeaderboard from "../components/ComplianceLeaderboard";
 
 // Mock data with additional tasks
 const mockTasks = [
@@ -64,6 +65,34 @@ const mockTasks = [
     priority: "low",
     completed: true,
     dueDate: "2025-05-10"
+  },
+  {
+    id: 9,
+    title: "Research renewable energy options",
+    priority: "medium",
+    completed: false,
+    dueDate: "2025-06-15"
+  },
+  {
+    id: 10,
+    title: "Conduct employee sustainability workshop",
+    priority: "high",
+    completed: false,
+    dueDate: "2025-06-12"
+  },
+  {
+    id: 11,
+    title: "Update chemical storage procedures",
+    priority: "high",
+    completed: true,
+    dueDate: "2025-05-08"
+  },
+  {
+    id: 12,
+    title: "Complete carbon footprint assessment",
+    priority: "medium",
+    completed: false,
+    dueDate: "2025-06-20"
   }
 ];
 
@@ -120,10 +149,15 @@ const DashboardPage = () => {
       const completedTasksRatio = (tasks.filter(task => task.completed).length / tasks.length);
       const tasksScore = completedTasksRatio * 70;
       
-      // Additional random factor to simulate other compliance metrics (30% of total)
-      const randomFactor = Math.floor(Math.random() * 20) + 10;
+      // Add a weighted factor for tasks prioritized by importance
+      const completedHighPriority = tasks.filter(task => task.completed && task.priority === "high").length;
+      const totalHighPriority = tasks.filter(task => task.priority === "high").length;
+      const highPriorityScore = totalHighPriority > 0 ? (completedHighPriority / totalHighPriority) * 15 : 0;
       
-      return Math.round(tasksScore + randomFactor);
+      // Additional random factor to simulate other compliance metrics (15% of total)
+      const randomFactor = Math.floor(Math.random() * 10) + 5;
+      
+      return Math.round(tasksScore + highPriorityScore + randomFactor);
     };
     
     setComplianceScore(calcComplianceScore());
@@ -200,27 +234,35 @@ const DashboardPage = () => {
           </Card>
         </div>
         
-        {/* Alerts */}
-        <h2 className="text-xl font-semibold mb-4 dark:text-white">Alerts & Notifications</h2>
-        <div className="space-y-4 mb-8">
-          {mockAlerts.map(alert => (
-            <div 
-              key={alert.id} 
-              className={`p-4 rounded-lg border flex items-start gap-3 ${
-                alert.severity === "warning" ? "border-amber-500 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800" : "border-blue-400 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-800"
-              }`}
-            >
-              {alert.severity === "warning" ? (
-                <AlertCircle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-              ) : (
-                <Clipboard className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
-              )}
-              <div>
-                <h3 className="font-medium dark:text-white">{alert.title}</h3>
-                <p className="text-sm text-muted-foreground dark:text-white/80">{alert.description}</p>
-              </div>
+        {/* Leaderboard and Alerts in two columns */}
+        <div className="grid gap-6 md:grid-cols-2 mb-8">
+          <div>
+            <ComplianceLeaderboard />
+          </div>
+          
+          <div>
+            <h2 className="text-xl font-semibold mb-4 dark:text-white">Alerts & Notifications</h2>
+            <div className="space-y-4">
+              {mockAlerts.map(alert => (
+                <div 
+                  key={alert.id} 
+                  className={`p-4 rounded-lg border flex items-start gap-3 ${
+                    alert.severity === "warning" ? "border-amber-500 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800" : "border-blue-400 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-800"
+                  }`}
+                >
+                  {alert.severity === "warning" ? (
+                    <AlertCircle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+                  ) : (
+                    <Clipboard className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                  )}
+                  <div>
+                    <h3 className="font-medium dark:text-white">{alert.title}</h3>
+                    <p className="text-sm text-muted-foreground dark:text-white/80">{alert.description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
         
         {/* Tasks */}

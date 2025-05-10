@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Send, Mic, MicOff, RotateCcw, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -11,21 +12,33 @@ interface Message {
   timestamp: Date;
 }
 
-// Mock AI responses for demo purposes
-const mockResponses = {
+// Assessment questions to be asked in sequence
+const assessmentQuestions = {
   "en": [
-    "Hello! I'm your EcoSense AI assistant. How can I help with your sustainability compliance needs today?",
-    "Based on your business type, there are several environmental regulations you should be aware of. Would you like me to provide a summary?",
-    "I recommend starting with an energy audit. This can help identify areas where you can reduce your carbon footprint and save costs.",
-    "For a small manufacturing business in Karnataka, you'll need to comply with the Karnataka State Pollution Control Board regulations regarding waste disposal and air emissions.",
-    "I've created a personalized sustainability report for your business. You can view it on your dashboard."
+    "What are the primary activities of your business? (e.g., manufacturing, service, agriculture)",
+    "Do you generate any waste materials? (Yes/No)",
+    "Do you use any hazardous substances in your operations? (Yes/No/Unsure)",
+    "What are the raw materials used?",
+    "Do your raw materials used are locally available or imported?",
+    "What's the fuel consumption?",
+    "Do you track your energy consumption? (Yes/No)",
+    "Enter your monthly electricity usage in kilowatt-hours (kWh):",
+    "Enter your monthly fuel consumption in liters:",
+    "How much waste are you generating?",
+    "What way of discharging waste you have adopted?"
   ],
   "kn": [
-    "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಎಕೋಸೆನ್ಸ್ ಎಐ ಸಹಾಯಕ. ಇಂದು ನಿಮ್ಮ ಸುಸ್ಥಿರತೆ ಅನುಸರಣೆ ಅಗತ್ಯಗಳಿಗೆ ನಾನು ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
-    "ನಿಮ್ಮ ವ್ಯಾಪಾರ ಪ್ರಕಾರದ ಆಧಾರದ ಮೇಲೆ, ನೀವು ತಿಳಿದಿರಬೇಕಾದ ಹಲವಾರು ಪರಿಸರ ನಿಯಮಗಳಿವೆ. ನಾನು ಸಾರಾಂಶವನ್ನು ಒದಗಿಸಲು ಬಯಸುತ್ತೀರಾ?",
-    "ಶಕ್ತಿ ಆಡಿಟ್‌ನೊಂದಿಗೆ ಪ್ರಾರಂಭಿಸಲು ನಾನು ಶಿಫಾರಸು ಮಾಡುತ್ತೇನೆ. ಇದು ನಿಮ್ಮ ಕಾರ್ಬನ್ ಹೆಜ್ಜೆ ಕುರಿತು ಕಡಿಮೆ ಮಾಡಲು ಮತ್ತು ವೆಚ್ಚ ಉಳಿಸಲು ಸಹಾಯ ಮಾಡಬಹುದು.",
-    "ಕರ್ನಾಟಕದಲ್ಲಿ ಸಣ್ಣ ಉತ್ಪಾದನಾ ವ್ಯಾಪಾರಕ್ಕೆ, ತ್ಯಾಜ್ಯ ವಿಲೇವಾರಿ ಮತ್ತು ವಾಯು ಹೊರಸೂಸುವಿಕೆಯ ಕುರಿತು ಕರ್ನಾಟಕ ರಾಜ್ಯ ಮಾಲಿನ್ಯ ನಿಯಂತ್ರಣ ಮಂಡಳಿ ನಿಯಮಗಳನ್ನು ಅನುಸರಿಸಬೇಕಾಗುತ್ತದೆ.",
-    "ನಿಮ್ಮ ವ್ಯಾಪಾರಕ್ಕಾಗಿ ವೈಯಕ್ತಿಕ ಸುಸ್ಥಿರತೆ ವರದಿಯನ್ನು ರಚಿಸಿದ್ದೇನೆ. ನೀವು ಅದನ್ನು ನಿಮ್ಮ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ನಲ್ಲಿ ವೀಕ್ಷಿಸಬಹುದು."
+    "ನಿಮ್ಮ ವ್ಯಾಪಾರದ ಪ್ರಾಥಮಿಕ ಚಟುವಟಿಕೆಗಳು ಯಾವುವು? (ಉದಾ., ತಯಾರಿಕೆ, ಸೇವೆ, ಕೃಷಿ)",
+    "ನೀವು ಯಾವುದೇ ತ್ಯಾಜ್ಯ ವಸ್ತುಗಳನ್ನು ಉತ್ಪಾದಿಸುತ್ತೀರಾ? (ಹೌದು/ಇಲ್ಲ)",
+    "ನಿಮ್ಮ ಕಾರ್ಯಾಚರಣೆಗಳಲ್ಲಿ ನೀವು ಯಾವುದೇ ಅಪಾಯಕಾರಿ ವಸ್ತುಗಳನ್ನು ಬಳಸುತ್ತೀರಾ? (ಹೌದು/ಇಲ್ಲ/ಖಚಿತವಿಲ್ಲ)",
+    "ಬಳಸಲಾಗುವ ಕಚ್ಚಾ ವಸ್ತುಗಳು ಯಾವುವು?",
+    "ನಿಮ್ಮ ಬಳಸಿದ ಕಚ್ಚಾ ವಸ್ತುಗಳು ಸ್ಥಳೀಯವಾಗಿ ಲಭ್ಯವಿವೆಯೇ ಅಥವಾ ಆಮದು ಮಾಡಿಕೊಳ್ಳಲಾಗಿದೆಯೇ?",
+    "ಇಂಧನ ಬಳಕೆ ಎಷ್ಟು?",
+    "ನೀವು ನಿಮ್ಮ ಇಂಧನ ಬಳಕೆಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡುತ್ತೀರಾ? (ಹೌದು/ಇಲ್ಲ)",
+    "ನಿಮ್ಮ ಮಾಸಿಕ ವಿದ್ಯುತ್ ಬಳಕೆಯನ್ನು ಕಿಲೋವ್ಯಾಟ್-ಗಂಟೆಗಳಲ್ಲಿ (kWh) ನಮೂದಿಸಿ:",
+    "ನಿಮ್ಮ ಮಾಸಿಕ ಇಂಧನ ಬಳಕೆಯನ್ನು ಲೀಟರ್‌ಗಳಲ್ಲಿ ನಮೂದಿಸಿ:",
+    "ನೀವು ಎಷ್ಟು ತ್ಯಾಜ್ಯವನ್ನು ಉತ್ಪಾದಿಸುತ್ತಿದ್ದೀರಿ?",
+    "ನೀವು ತ್ಯಾಜ್ಯ ವಿಸರ್ಜನೆಗೆ ಯಾವ ವಿಧಾನವನ್ನು ಅಳವಡಿಸಿಕೊಂಡಿದ್ದೀರಿ?"
   ]
 };
 
@@ -34,11 +47,14 @@ const ChatInterface = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1); // Start with introduction
+  const [assessmentStarted, setAssessmentStarted] = useState(false);
+  const [assessmentAnswers, setAssessmentAnswers] = useState<string[]>([]);
+  
   const { language, t } = useLanguage();
   const { toast } = useToast();
   
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  const responseIndex = useRef(0);
   
   // Simulate initial AI message
   useEffect(() => {
@@ -46,7 +62,7 @@ const ChatInterface = () => {
       setMessages([
         {
           id: Date.now(),
-          text: mockResponses[language as keyof typeof mockResponses][0],
+          text: "Hello! I'm your EcoSense AI assistant. I can help you with a sustainability assessment for your business. Would you like to start the assessment now?",
           sender: "ai",
           timestamp: new Date(),
         },
@@ -58,6 +74,43 @@ const ChatInterface = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Ask next assessment question when current question is answered
+  useEffect(() => {
+    if (assessmentStarted && currentQuestionIndex >= 0 && currentQuestionIndex < assessmentQuestions[language as keyof typeof assessmentQuestions].length) {
+      const timer = setTimeout(() => {
+        const nextQuestion = assessmentQuestions[language as keyof typeof assessmentQuestions][currentQuestionIndex];
+        
+        const aiMessage: Message = {
+          id: Date.now(),
+          text: nextQuestion,
+          sender: "ai",
+          timestamp: new Date(),
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+        setIsLoading(false);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    } else if (assessmentStarted && currentQuestionIndex >= assessmentQuestions[language as keyof typeof assessmentQuestions].length) {
+      // Assessment completed
+      const timer = setTimeout(() => {
+        const completionMessage: Message = {
+          id: Date.now(),
+          text: "Thank you for completing the sustainability assessment. I'll analyze your responses and provide recommendations on your dashboard.",
+          sender: "ai",
+          timestamp: new Date(),
+        };
+        
+        setMessages(prev => [...prev, completionMessage]);
+        setIsLoading(false);
+        setAssessmentStarted(false);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [currentQuestionIndex, assessmentStarted, language]);
 
   // Handle send message
   const handleSendMessage = () => {
@@ -75,19 +128,33 @@ const ChatInterface = () => {
     setInputMessage("");
     setIsLoading(true);
     
-    // Simulate AI response
-    setTimeout(() => {
-      responseIndex.current = (responseIndex.current + 1) % mockResponses[language as keyof typeof mockResponses].length;
-      const aiResponse: Message = {
-        id: Date.now(),
-        text: mockResponses[language as keyof typeof mockResponses][responseIndex.current],
-        sender: "ai",
-        timestamp: new Date(),
-      };
-      
-      setMessages((prev) => [...prev, aiResponse]);
-      setIsLoading(false);
-    }, 1500);
+    // If assessment hasn't started, check if user wants to start
+    if (!assessmentStarted) {
+      const lowerCaseInput = inputMessage.toLowerCase();
+      if (lowerCaseInput.includes("yes") || lowerCaseInput.includes("start") || lowerCaseInput.includes("begin") || lowerCaseInput.includes("sure")) {
+        setAssessmentStarted(true);
+        // Move to first question
+        setCurrentQuestionIndex(0);
+      } else {
+        // Regular chat mode - simulated response
+        setTimeout(() => {
+          const randomIndex = Math.floor(Math.random() * (mockResponses[language as keyof typeof mockResponses].length - 1)) + 1;
+          const aiResponse: Message = {
+            id: Date.now(),
+            text: mockResponses[language as keyof typeof mockResponses][randomIndex],
+            sender: "ai",
+            timestamp: new Date(),
+          };
+          
+          setMessages((prev) => [...prev, aiResponse]);
+          setIsLoading(false);
+        }, 1500);
+      }
+    } else {
+      // Assessment is ongoing, store answer and move to next question
+      setAssessmentAnswers(prev => [...prev, inputMessage]);
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    }
   };
 
   // Handle voice input
@@ -115,8 +182,8 @@ const ChatInterface = () => {
         setIsRecording(false);
         // Simulate detected text
         const demoVoiceTexts = {
-          "en": "What sustainability practices should my small manufacturing business implement?",
-          "kn": "ನನ್ನ ಸಣ್ಣ ತಯಾರಿಕಾ ವ್ಯಾಪಾರವು ಯಾವ ಸುಸ್ಥಿರತೆ ಅಭ್ಯಾಸಗಳನ್ನು ಅನುಷ್ಠಾನಗೊಳಿಸಬೇಕು?"
+          "en": assessmentStarted ? "Yes, about 500 kilograms per month" : "What sustainability practices should my small manufacturing business implement?",
+          "kn": assessmentStarted ? "ಹೌದು, ತಿಂಗಳಿಗೆ ಸುಮಾರು 500 ಕಿಲೋಗ್ರಾಂ" : "ನನ್ನ ಸಣ್ಣ ತಯಾರಿಕಾ ವ್ಯಾಪಾರವು ಯಾವ ಸುಸ್ಥಿರತೆ ಅಭ್ಯಾಸಗಳನ್ನು ಅನುಷ್ಠಾನಗೊಳಿಸಬೇಕು?"
         };
         setInputMessage(demoVoiceTexts[language as keyof typeof demoVoiceTexts]);
       }, 5000);
@@ -135,12 +202,32 @@ const ChatInterface = () => {
     setMessages([
       {
         id: Date.now(),
-        text: mockResponses[language as keyof typeof mockResponses][0],
+        text: "Hello! I'm your EcoSense AI assistant. I can help you with a sustainability assessment for your business. Would you like to start the assessment now?",
         sender: "ai",
         timestamp: new Date(),
       },
     ]);
-    responseIndex.current = 0;
+    setAssessmentStarted(false);
+    setCurrentQuestionIndex(-1);
+    setAssessmentAnswers([]);
+  };
+
+  // Mock AI responses for demo purposes
+  const mockResponses = {
+    "en": [
+      "Hello! I'm your EcoSense AI assistant. How can I help with your sustainability compliance needs today?",
+      "Based on your business type, there are several environmental regulations you should be aware of. Would you like me to provide a summary?",
+      "I recommend starting with an energy audit. This can help identify areas where you can reduce your carbon footprint and save costs.",
+      "For a small manufacturing business in Karnataka, you'll need to comply with the Karnataka State Pollution Control Board regulations regarding waste disposal and air emissions.",
+      "I've created a personalized sustainability report for your business. You can view it on your dashboard."
+    ],
+    "kn": [
+      "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಎಕೋಸೆನ್ಸ್ ಎಐ ಸಹಾಯಕ. ಇಂದು ನಿಮ್ಮ ಸುಸ್ಥಿರತೆ ಅನುಸರಣೆ ಅಗತ್ಯಗಳಿಗೆ ನಾನು ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      "ನಿಮ್ಮ ವ್ಯಾಪಾರ ಪ್ರಕಾರದ ಆಧಾರದ ಮೇಲೆ, ನೀವು ತಿಳಿದಿರಬೇಕಾದ ಹಲವಾರು ಪರಿಸರ ನಿಯಮಗಳಿವೆ. ನಾನು ಸಾರಾಂಶವನ್ನು ಒದಗಿಸಲು ಬಯಸುತ್ತೀರಾ?",
+      "ಶಕ್ತಿ ಆಡಿಟ್‌ನೊಂದಿಗೆ ಪ್ರಾರಂಭಿಸಲು ನಾನು ಶಿಫಾರಸು ಮಾಡುತ್ತೇನೆ. ಇದು ನಿಮ್ಮ ಕಾರ್ಬನ್ ಹೆಜ್ಜೆ ಕುರಿತು ಕಡಿಮೆ ಮಾಡಲು ಮತ್ತು ವೆಚ್ಚ ಉಳಿಸಲು ಸಹಾಯ ಮಾಡಬಹುದು.",
+      "ಕರ್ನಾಟಕದಲ್ಲಿ ಸಣ್ಣ ಉತ್ಪಾದನಾ ವ್ಯಾಪಾರಕ್ಕೆ, ತ್ಯಾಜ್ಯ ವಿಲೇವಾರಿ ಮತ್ತು ವಾಯು ಹೊರಸೂಸುವಿಕೆಯ ಕುರಿತು ಕರ್ನಾಟಕ ರಾಜ್ಯ ಮಾಲಿನ್ಯ ನಿಯಂತ್ರಣ ಮಂಡಳಿ ನಿಯಮಗಳನ್ನು ಅನುಸರಿಸಬೇಕಾಗುತ್ತದೆ.",
+      "ನಿಮ್ಮ ವ್ಯಾಪಾರಕ್ಕಾಗಿ ವೈಯಕ್ತಿಕ ಸುಸ್ಥಿರತೆ ವರದಿಯನ್ನು ರಚಿಸಿದ್ದೇನೆ. ನೀವು ಅದನ್ನು ನಿಮ್ಮ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ನಲ್ಲಿ ವೀಕ್ಷಿಸಬಹುದು."
+    ]
   };
 
   return (
@@ -158,11 +245,11 @@ const ChatInterface = () => {
               <div
                 className={`chat-bubble ${
                   message.sender === "user"
-                    ? "chat-bubble-user"
-                    : "chat-bubble-ai"
-                } max-w-[80%]`}
+                    ? "chat-bubble-user bg-primary text-primary-foreground rounded-2xl rounded-br-none px-4 py-2 max-w-[80%]"
+                    : "chat-bubble-ai bg-muted rounded-2xl rounded-bl-none px-4 py-2 max-w-[80%]"
+                }`}
               >
-                <div className="whitespace-pre-wrap">{message.text}</div>
+                <div className="whitespace-pre-wrap dark:text-white">{message.text}</div>
                 <div className="text-xs opacity-70 mt-1 dark:text-white/70">
                   {message.timestamp.toLocaleTimeString([], {
                     hour: "2-digit",
@@ -174,8 +261,8 @@ const ChatInterface = () => {
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="chat-bubble chat-bubble-ai">
-                <Loader2 className="h-5 w-5 animate-spin" />
+              <div className="chat-bubble-ai bg-muted rounded-2xl rounded-bl-none px-4 py-2">
+                <Loader2 className="h-5 w-5 animate-spin dark:text-white" />
               </div>
             </div>
           )}
@@ -207,7 +294,7 @@ const ChatInterface = () => {
                   handleSendMessage();
                 }
               }}
-              placeholder={t("typeMessage")}
+              placeholder={assessmentStarted ? "Type your answer..." : t("typeMessage")}
               className="w-full px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-eco-primary pr-28 dark:bg-eco-primary/20 dark:border-eco-primary/40 dark:text-white dark:placeholder:text-white/60"
               disabled={isLoading}
             />
