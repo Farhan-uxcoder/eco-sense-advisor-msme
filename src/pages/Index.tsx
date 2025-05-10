@@ -5,15 +5,17 @@ import { useLanguage } from "../components/LanguageSelector";
 import { Button } from "../components/ui/button";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SmokeAnimation from "../components/SmokeAnimation";
 
 const Index = () => {
   const { t } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SmokeAnimation />
       <Header />
       
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-eco-primary to-eco-secondary py-16 md:py-24">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtMS4zNiAwLTIuNS45Mi0yLjUgMi4wNHYxOS45MmMwIDEuMTIgMS4xNCAyLjA0IDIuNSAyLjA0czIuNS0uOTIgMi41LTIuMDRWMjAuMDRjMC0xLjEyLTEuMTQtMi4wNC0yLjUtMi4wNHptLTEyIDBjLTEuMzYgMC0yLjUuOTItMi41IDIuMDR2MTkuOTJjMCAxLjEyIDEuMTQgMi4wNCAyLjUgMi4wNHMyLjUtLjkyIDIuNS0yLjA0VjIwLjA0YzAtMS4xMi0xLjE0LTIuMDQtMi41LTIuMDR6IiBmaWxsPSIjMzMzIiBmaWxsLW9wYWNpdHk9Ii4xIi8+PC9nPjwvc3ZnPg==')] opacity-10"></div>
