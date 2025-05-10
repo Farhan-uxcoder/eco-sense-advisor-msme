@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MSME Sustainability Form</title>
+</head>
+<body>
+  <h2>MSME Sustainability Compliance Form</h2>
+  <form id="msmeForm">
+    <input type="text" name="company" placeholder="Company Name" required><br><br>
+    <input type="text" name="product" placeholder="Product" required><br><br>
+    <input type="text" name="material" placeholder="Material" required><br><br>
+    <input type="text" name="process" placeholder="Process" required><br><br>
+    <input type="text" name="issues" placeholder="Issues Identified"><br><br>
+    <input type="text" name="suggestions" placeholder="AI Suggestions"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('msmeForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => { data[key] = value });
+
+      fetch("https://hooks.zapier.com/hooks/catch/22843334/2nlasef/", {  
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(res => {
+        alert("Data submitted successfully!");
+        form.reset();
+      }).catch(err => {
+        alert("Error submitting data.");
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
